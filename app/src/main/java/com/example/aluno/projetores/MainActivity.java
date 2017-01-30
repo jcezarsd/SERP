@@ -1,6 +1,7 @@
 package com.example.aluno.projetores;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -137,6 +138,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_projetor) {
             vf.setDisplayedChild(1);
+            gerenciarProjetores();
         } else if (id == R.id.nav_professor) {
             vf.setDisplayedChild(2);
         } else if (id == R.id.nav_emprestimos) {
@@ -146,6 +148,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void gerenciarProjetores() {
+        Intent intent = new Intent(this, ProjetoresActivity.class);
+        startActivity(intent);
     }
 
     public void qrCode() {

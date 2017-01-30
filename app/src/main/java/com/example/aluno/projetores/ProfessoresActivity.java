@@ -22,6 +22,6 @@ public class ProfessoresActivity extends AppCompatActivity {
         new Professor("Luiz Henrique", "2222222222", "DCC", 2);
         new Professor("Antonio Maria", "3333333333", "DCC", 3);
         new Professor("Marluce Pereira", "4444444444", "DCC", 4);
-        
+
     }
 }

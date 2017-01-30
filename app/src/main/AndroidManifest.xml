@@ -27,6 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProfessoresActivity"></activity>
+        <activity android:name=".ProjetoresActivity"></activity>
+
     </application>
 
 </manifest>
