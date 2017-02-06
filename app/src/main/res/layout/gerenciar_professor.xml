@@ -25,10 +25,11 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/listViewProfessores"
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:choiceMode="none"/>
+        android:choiceMode="none"
+        tools:listitem="@android:layout/simple_list_item_1" />
 
 </RelativeLayout>
