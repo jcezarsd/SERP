@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/llIcon">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:contentDescription="Avatar"
+            android:src="@drawable/ic_account_box" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/llAction">
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/btEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="Action"
+            android:src="@drawable/ic_mode_edit"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/llIcon"
+        android:layout_toLeftOf="@id/llAction">
+
+        <TextView
+            android:id="@+id/tvNome"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome professor"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvDepartamento"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:text="Departamento"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

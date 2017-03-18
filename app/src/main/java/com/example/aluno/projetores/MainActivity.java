@@ -1,217 +1,114 @@
 package com.example.aluno.projetores;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
+import android.view.Gravity;
+import android.view.View;
 
-import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.example.aluno.projetores.fragments.EmprestimosFragment;
+import com.example.aluno.projetores.fragments.HomeFragment;
+import com.example.aluno.projetores.fragments.ProfessoresFragment;
+import com.example.aluno.projetores.fragments.ProjetoresFragment;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import java.io.IOException;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    SurfaceView cameraView = null;
-
-    CameraSource cameraSource = null;
-    BarcodeDetector barcodeDetector = null;
-    TextView barcodeInfo = null;
-    ViewFlipper vf = null;
-
-    final int MY_PERMISSIONS_REQUEST_CAMERA = 10;
+    private Toolbar mToolbar;
+    private Drawer navigationDrawerLeft;
+    private AccountHeader headerNavigationLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        vf = (ViewFlipper)findViewById(R.id.vf);
+        instantiateViews();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                vf.setDisplayedChild(0);
-            }
-        });
+        setToolbar();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        setNavigationDrawer(savedInstanceState);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
-        } else {
-            qrCode();
-        }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CAMERA: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    private void instantiateViews(){
+        mToolbar = (Toolbar) findViewById(R.id.tb_main);
+    }
 
-                    qrCode();
+    private void setToolbar() {
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+    }
 
-                } else {
+    private void setNavigationDrawer(Bundle savedInstanceState) {
+        //header of menu
+        headerNavigationLeft = new AccountHeaderBuilder().withActivity(this).addProfiles(
+                new ProfileDrawerItem().withEmail("Secretária").withIcon(R.drawable.ic_account_circle_white),
+                new ProfileDrawerItem().withEmail("Professor").withIcon(R.drawable.ic_account_circle_white),
+                new ProfileDrawerItem().withEmail("Técnico").withIcon(R.drawable.ic_account_circle_white)
+        ).withHeaderBackground(R.color.colorPrimaryDark).build();
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        this.finishAffinity();
+        PrimaryDrawerItem home = new PrimaryDrawerItem().withIdentifier(0).withName("Emprestar projetor").withIcon(R.drawable.ic_crop_free);
+        PrimaryDrawerItem projetores = new PrimaryDrawerItem().withIdentifier(1).withName("Projetores").withIcon(R.drawable.ic_videocam);
+        PrimaryDrawerItem professores = new PrimaryDrawerItem().withIdentifier(2).withName("Professores").withIcon(R.drawable.ic_account_box);
+        PrimaryDrawerItem emprestimos = new PrimaryDrawerItem().withIdentifier(3).withName("Emprestimos").withIcon(R.drawable.ic_assignment);
+
+        navigationDrawerLeft = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(mToolbar)
+                .withDisplayBelowStatusBar(true)
+                .withActionBarDrawerToggleAnimated(true).withDrawerGravity(Gravity.LEFT)
+                .withSavedInstance(savedInstanceState)
+                .addDrawerItems(home,
+                        new DividerDrawerItem(),
+                        projetores,
+                        professores,
+                        emprestimos)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        //TODO: Melhorar o jeito desse switch - Magic Numbers
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+                        switch(position) {
+                            case 1:
+                                ft.replace(R.id.flMainContent, new HomeFragment());
+                                mToolbar.setTitle("Leitor de QRCode");
+                                ft.commit();
+                                break;
+
+                            case 3:
+                                ft.replace(R.id.flMainContent, new ProjetoresFragment());
+                                mToolbar.setTitle("Projetores");
+                                ft.commit();
+                                break;
+
+                            case 4:
+                                ft.replace(R.id.flMainContent, new ProfessoresFragment());
+                                mToolbar.setTitle("Professores");
+                                ft.commit();
+                                break;
+
+                            case 5:
+                                ft.replace(R.id.flMainContent, new EmprestimosFragment());
+                                mToolbar.setTitle("Emprestimos");
+                                ft.commit();
+                                break;
+                        }
+                        return false;
                     }
-                }
-                return;
-            }
-
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_projetor) {
-            vf.setDisplayedChild(1);
-            gerenciarProjetores();
-        } else if (id == R.id.nav_professor) {
-            vf.setDisplayedChild(2);
-        } else if (id == R.id.nav_emprestimos) {
-            vf.setDisplayedChild(3);
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    public void gerenciarProjetores() {
-        Intent intent = new Intent(this, ProjetoresActivity.class);
-        startActivity(intent);
-    }
-
-    public void qrCode() {
-
-        cameraView = (SurfaceView)findViewById(R.id.camera_view);
-        barcodeInfo = (TextView)findViewById(R.id.code_info);
-
-        barcodeDetector =
-                new BarcodeDetector.Builder(this)
-                        .setBarcodeFormats(Barcode.QR_CODE)
-                        .build();
-
-        cameraSource = new CameraSource
-                .Builder(this, barcodeDetector)
+                }).withAccountHeader(headerNavigationLeft)
                 .build();
 
-        cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
-
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-
-                try {
-                    cameraSource.start(cameraView.getHolder());
-                } catch (IOException ie) {
-                    Log.e("CAMERA SOURCE", ie.getMessage());
-                }
-
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                cameraSource.stop();
-            }
-        });
-
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-            @Override
-            public void release() {
-            }
-
-            @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
-
-                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-
-                if (barcodes.size() != 0) {
-                    barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
-                        public void run() {
-                            barcodeInfo.setText("QRCode: " + barcodes.valueAt(0).displayValue); // Update the TextView
-                        }
-                    });
-                }
-
-            }
-        });
-
+        navigationDrawerLeft.setSelection(home);
     }
+
 }

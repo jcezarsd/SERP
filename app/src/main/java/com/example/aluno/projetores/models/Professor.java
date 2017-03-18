@@ -1,4 +1,6 @@
-package com.example.aluno.projetores;
+package com.example.aluno.projetores.models;
+
+import java.util.ArrayList;
 
 /**
  * Created by aluno on 30/01/17.
@@ -31,6 +33,15 @@ public class Professor {
 
     public String getDepartamento() {
         return departamento;
+    }
+
+    public static Professor findById (ArrayList<Professor> professores, Integer id){
+        for (Professor professor: professores) {
+            if (professor.id.equals(id)){
+                return professor;
+            };
+        }
+        return null;
     }
 
 }

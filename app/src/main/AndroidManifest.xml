@@ -26,8 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProfessoresActivity"></activity>
-        <activity android:name=".ProjetoresActivity"></activity>
+        <activity android:name=".fragments.ProfessoresFragment"/>
+        <activity android:name=".fragments.ProjetoresFragment"/>
 
     </application>
 

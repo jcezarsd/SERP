@@ -1,4 +1,4 @@
-package com.example.aluno.projetores;
+package com.example.aluno.projetores.models;
 
 import java.util.Date;
 
