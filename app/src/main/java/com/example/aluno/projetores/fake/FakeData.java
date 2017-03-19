@@ -1,5 +1,6 @@
 package com.example.aluno.projetores.fake;
 
+import com.example.aluno.projetores.fragments.ProfessoresFragment;
 import com.example.aluno.projetores.models.Emprestimo;
 import com.example.aluno.projetores.models.Professor;
 import com.example.aluno.projetores.models.Projetor;
@@ -18,6 +19,7 @@ public class FakeData {
     private ArrayList<Emprestimo> emprestimos = new ArrayList<>();
 
     public FakeData() {
+
         //Preenche professores
         professores.add(new Professor("Rafael Durelli", "0000000000", "DCC", 0));
         professores.add(new Professor("Ricardo Terra", "1111111111", "DCC", 1));
@@ -37,13 +39,13 @@ public class FakeData {
         projetores.add(new Projetor("DaChina", "SM", 0, "0909090909", 8));
 
         //Preenche emprestimos
-        emprestimos.add(new Emprestimo(0, 0, new Date()));
-        emprestimos.add(new Emprestimo(1, 1, new Date()));
-        emprestimos.add(new Emprestimo(2, 2, new Date()));
-        emprestimos.add(new Emprestimo(3, 0, new Date()));
-        emprestimos.add(new Emprestimo(4, 1, new Date()));
-        emprestimos.add(new Emprestimo(5, 2, new Date()));
-        emprestimos.add(new Emprestimo(6, 3, new Date()));
+        emprestimos.add(new Emprestimo(0, 0, new Date(), null));
+        emprestimos.add(new Emprestimo(1, 1, new Date(), null));
+        emprestimos.add(new Emprestimo(2, 2, new Date(), null));
+        emprestimos.add(new Emprestimo(3, 0, new Date(), null));
+        emprestimos.add(new Emprestimo(4, 1, new Date(), null));
+        emprestimos.add(new Emprestimo(5, 2, new Date(), null));
+        emprestimos.add(new Emprestimo(6, 3, new Date(), null));
 
 
     }

@@ -45,7 +45,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
 
     @Override
     public int getItemCount() {
-        return professores.size();
+        return professores == null ? 0 : professores.size();
     }
 
     public class ProfessorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

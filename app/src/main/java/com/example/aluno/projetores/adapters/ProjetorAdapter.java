@@ -45,7 +45,7 @@ public class ProjetorAdapter extends RecyclerView.Adapter<ProjetorAdapter.Projet
 
     @Override
     public int getItemCount() {
-        return projetores.size();
+        return projetores == null ? 0 : projetores.size();
     }
 
     public class ProjetorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

@@ -1,5 +1,6 @@
 package com.example.aluno.projetores;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,9 @@ import com.example.aluno.projetores.fragments.EmprestimosFragment;
 import com.example.aluno.projetores.fragments.HomeFragment;
 import com.example.aluno.projetores.fragments.ProfessoresFragment;
 import com.example.aluno.projetores.fragments.ProjetoresFragment;
+import com.example.aluno.projetores.models.Emprestimo;
+import com.example.aluno.projetores.models.Professor;
+import com.example.aluno.projetores.models.Projetor;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -19,6 +23,9 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         setNavigationDrawer(savedInstanceState);
 
+        insertFakeData(getApplicationContext());
     }
 
     private void instantiateViews(){
@@ -109,6 +117,63 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         navigationDrawerLeft.setSelection(home);
+    }
+
+    public void insertFakeData(Context applicationContext) {
+
+        ProfessoresFragment professoresFragment = new ProfessoresFragment();
+        ProjetoresFragment projetoresFragment = new ProjetoresFragment();
+        EmprestimosFragment emprestimosFragment = new EmprestimosFragment();
+
+        ArrayList<Professor> professores = professoresFragment.buscarProfessores(applicationContext);
+        ArrayList<Projetor> projetores = projetoresFragment.buscarProjetores(applicationContext);
+        ArrayList<Emprestimo> emprestimos = emprestimosFragment.buscarEmprestimos(applicationContext);
+
+        if(professores == null || professores.size() == 0) {
+
+            professores = new ArrayList<>();
+
+            professores.add(new Professor("Rafael Durelli", "0000000000", "DCC", 0));
+            professores.add(new Professor("Ricardo Terra", "1111111111", "DCC", 1));
+            professores.add(new Professor("Luiz Henrique", "2222222222", "DCC", 2));
+            professores.add(new Professor("Antonio Maria", "3333333333", "DCC", 3));
+            professores.add(new Professor("Marluce Pereira", "4444444444", "DCC", 4));
+
+            professoresFragment.save(professores, applicationContext);
+        }
+
+        if(projetores == null || projetores.size() == 0) {
+
+            projetores = new ArrayList<>();
+
+            projetores.add(new Projetor("Phillips", "BBR1001", 0, "0101010101", 0));
+            projetores.add(new Projetor("Phillips", "KXT-8785", 0, "0202020202", 1));
+            projetores.add(new Projetor("Epson", "Mod2342", 1, "0303030303", 2));
+            projetores.add(new Projetor("Epson", "Mod9783", 1, "0404040404", 3));
+            projetores.add(new Projetor("Multilaser", "Ruim", 2, "0505050505", 4));
+            projetores.add(new Projetor("DaChina", "SM", 2, "0606060606", 5));
+            projetores.add(new Projetor("DaChina", "SM", 2, "0707070707", 6));
+            projetores.add(new Projetor("DaChina", "SM", 1, "0808080808", 7));
+            projetores.add(new Projetor("DaChina", "SM", 0, "0909090909", 8));
+
+            projetoresFragment.save(projetores, applicationContext);
+        }
+
+        if(emprestimos == null || emprestimos.size() == 0) {
+
+            emprestimos = new ArrayList<>();
+
+            emprestimos.add(new Emprestimo(0, 0, new Date(), null));
+            emprestimos.add(new Emprestimo(1, 1, new Date(), null));
+            emprestimos.add(new Emprestimo(2, 2, new Date(), null));
+            emprestimos.add(new Emprestimo(3, 0, new Date(), null));
+            emprestimos.add(new Emprestimo(4, 1, new Date(), null));
+            emprestimos.add(new Emprestimo(5, 2, new Date(), null));
+            emprestimos.add(new Emprestimo(6, 3, new Date(), null));
+
+            emprestimosFragment.save(emprestimos, applicationContext);
+        }
+
     }
 
 }

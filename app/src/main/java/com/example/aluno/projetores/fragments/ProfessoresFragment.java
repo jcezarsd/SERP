@@ -1,4 +1,5 @@
 package com.example.aluno.projetores.fragments;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -12,17 +13,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.aluno.projetores.fake.FakeData;
-import com.example.aluno.projetores.models.Professor;
 import com.example.aluno.projetores.R;
 import com.example.aluno.projetores.adapters.ProfessorAdapter;
+import com.example.aluno.projetores.database.Database;
+import com.example.aluno.projetores.database.SerializeObject;
 import com.example.aluno.projetores.decorators.GridSpacingItemDecoration;
+import com.example.aluno.projetores.models.Professor;
 
 import java.util.ArrayList;
 
 public class ProfessoresFragment extends Fragment {
     private RecyclerView rvProfessores;
 
+    public static final String NOME_ARQUIVO = "serp_professores.dat";
     private ArrayList<Professor> professores = new ArrayList<>();
 
 
@@ -57,7 +60,7 @@ public class ProfessoresFragment extends Fragment {
 
     private void fetchProfessores() {
 
-        professores = new FakeData().getProfessores();
+        professores = buscarProfessores(getContext());
 
         setProfessorData();
     }
@@ -94,112 +97,50 @@ public class ProfessoresFragment extends Fragment {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
-}
-/*
+    public void save(ArrayList<Professor> professor, Context context) {
 
-public class ProfessoresFragment extends Fragment {
-
-    RecyclerView rvProfessores;
-
-    ArrayList<Professor> profEstaticos = new ArrayList<>();
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_gerenciar_professores);
-
-//        ListView listProfessores = (ListView) findViewById(R.id.listViewProfessores);
-
-        profEstaticos.add(new Professor("Rafael Durelli", "0000000000", "DCC", 0));
-        profEstaticos.add(new Professor("Ricardo Terra", "1111111111", "DCC", 1));
-        profEstaticos.add(new Professor("Luiz Henrique", "2222222222", "DCC", 2));
-        profEstaticos.add(new Professor("Antonio Maria", "3333333333", "DCC", 3));
-        profEstaticos.add(new Professor("Marluce Pereira", "4444444444", "DCC", 4));
-        bindViews();
-        setProfessorData();
-//        final ArrayList<String> listItems = new ArrayList<>();
-//        for(int i = 0; i < profEstaticos.size(); i++){
-//            Professor professor = profEstaticos.get(i);
-//            listItems.add(professor.getNome());
-//        }
-//
-//        final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-//
-//        listProfessores.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, final View view,
-//                                    int position, long id) {
-//                final String item = (String) parent.getItemAtPosition(position);
-//                view.animate().setDuration(2000).alpha(0)
-//                        .withEndAction(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                listItems.remove(item);
-//                                adapter.notifyDataSetChanged();
-//                                view.setAlpha(1);
-//                            }
-//                        });
-//            }
-//
-//        });
-//
-//        listProfessores.setAdapter(adapter);
+        Database.save(context, professor, NOME_ARQUIVO);
 
     }
 
-    private void bindViews() {
-        rvProfessores = (RecyclerView) findViewById(R.id.rvProfessores);
-    }
+    public ArrayList<Professor> buscarProfessores(Context context) {
 
-    private void setProfessorData(){
+        ArrayList<Professor> returnClass = null;
 
-        rvProfessores.setHasFixedSize(true);
+        String ser = SerializeObject.ReadSettings(context, NOME_ARQUIVO);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
-        rvProfessores.setLayoutManager(mLayoutManager);
-        rvProfessores.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(10), true));
-        rvProfessores.setItemAnimator(new DefaultItemAnimator());
+        if (ser != null && !ser.equalsIgnoreCase("")) {
 
-        ProfessorAdapter adapter = new ProfessorAdapter(profEstaticos, this);
-        rvProfessores.setAdapter(adapter);
+            Object obj = SerializeObject.stringToObject(ser);
 
-    }
+            if (obj instanceof ArrayList) {
 
-    */
-/**
-     * Converting dp to pixel
-     *//*
-
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
-
-
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
+                returnClass = (ArrayList<Professor>)obj;
             }
+
         }
 
-        @Override
-        public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
+        return returnClass;
 
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
+//        ObjectInputStream input = null;
+//        ArrayList<Professor> ReturnClass = null;
+//        File f = new File(context.getFilesDir(), NOME_ARQUIVO);
+//        try {
+//
+//            input = new ObjectInputStream(new FileInputStream(f));
+//            ReturnClass = (ArrayList<Professor>) input.readObject();
+//            input.close();
+//
+//        } catch (StreamCorruptedException e) {
+//            e.printStackTrace();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return ReturnClass;
     }
 
 }
-*/

@@ -1,11 +1,12 @@
 package com.example.aluno.projetores.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Julio_Cezar on 30/01/17.
  */
-public class Projetor {
+public class Projetor implements Serializable {
 
     private Integer id;
     private String marca;

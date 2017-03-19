@@ -40,7 +40,7 @@ public class EmprestimoAdapter extends RecyclerView.Adapter<EmprestimoAdapter.Em
 
     @Override
     public void onBindViewHolder(final EmprestimoViewHolder holder, int position) {
-
+        
         Projetor projetor = Projetor.findById(new FakeData().getProjetores(),emprestimos.get(position).getIdProjetor());
         Professor professor = Professor.findById(new FakeData().getProfessores() ,emprestimos.get(position).getIdProjetor());
 
@@ -66,7 +66,7 @@ public class EmprestimoAdapter extends RecyclerView.Adapter<EmprestimoAdapter.Em
 
     @Override
     public int getItemCount() {
-        return emprestimos.size();
+        return emprestimos == null ? 0 : emprestimos.size();
     }
 
     public class EmprestimoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

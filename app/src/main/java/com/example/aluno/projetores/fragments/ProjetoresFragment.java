@@ -15,8 +15,9 @@ import android.view.ViewGroup;
 
 import com.example.aluno.projetores.R;
 import com.example.aluno.projetores.adapters.ProjetorAdapter;
+import com.example.aluno.projetores.database.Database;
+import com.example.aluno.projetores.database.SerializeObject;
 import com.example.aluno.projetores.decorators.GridSpacingItemDecoration;
-import com.example.aluno.projetores.fake.FakeData;
 import com.example.aluno.projetores.models.Projetor;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class ProjetoresFragment extends Fragment {
 
     private RecyclerView rvProjetores;
 
+    public static final String NOME_ARQUIVO = "serp_projetores.dat";
     ArrayList<Projetor> projetores = new ArrayList<>();
 
     public ProjetoresFragment() {
@@ -58,7 +60,7 @@ public class ProjetoresFragment extends Fragment {
 
     private void fetchProjetores() {
 
-        projetores = new FakeData().getProjetores();
+        projetores = buscarProjetores(getContext());
 
         setProjetorData();
     }
@@ -94,5 +96,51 @@ public class ProjetoresFragment extends Fragment {
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
+
+    public void save(ArrayList<Projetor> projetor, Context context) {
+
+        Database.save(context, projetor, NOME_ARQUIVO);
+    }
+
+    public ArrayList<Projetor> buscarProjetores(Context context){
+
+        ArrayList<Projetor> returnClass = null;
+
+        String ser = SerializeObject.ReadSettings(context, NOME_ARQUIVO);
+
+        if (ser != null && !ser.equalsIgnoreCase("")) {
+
+            Object obj = SerializeObject.stringToObject(ser);
+
+            if (obj instanceof ArrayList) {
+
+                returnClass = (ArrayList<Projetor>)obj;
+            }
+
+        }
+
+        return returnClass;
+
+//        ObjectInputStream input = null;
+//        ArrayList<Projetor> ReturnClass = null;
+//        File f = new File(context.getFilesDir(), NOME_ARQUIVO);
+//        try {
+//
+//            input = new ObjectInputStream(new FileInputStream(f));
+//            ReturnClass = (ArrayList<Projetor>) input.readObject();
+//            input.close();
+//
+//        } catch (StreamCorruptedException e) {
+//            e.printStackTrace();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return ReturnClass;
+
     }
 }

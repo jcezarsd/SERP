@@ -1,11 +1,12 @@
 package com.example.aluno.projetores.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by aluno on 06/02/17.
  */
-public class Emprestimo {
+public class Emprestimo implements Serializable{
 
     private Integer id;
     private Integer idProjetor;
@@ -14,10 +15,11 @@ public class Emprestimo {
     private Date dataDevolucao;
     private Boolean isAtivo;
 
-    public Emprestimo(Integer idProjetor, Integer idProfessor, Date dataEmprestimo) {
+    public Emprestimo(Integer idProjetor, Integer idProfessor, Date dataEmprestimo, Date dataDevolucao) {
         this.idProjetor = idProjetor;
         this.idProfessor = idProfessor;
         this.dataEmprestimo = dataEmprestimo;
+        this.dataDevolucao = dataDevolucao;
         this.isAtivo = true;
     }
 
@@ -49,4 +51,5 @@ public class Emprestimo {
         this.dataDevolucao = new Date();
         this.isAtivo = false;
     }
+
 }
