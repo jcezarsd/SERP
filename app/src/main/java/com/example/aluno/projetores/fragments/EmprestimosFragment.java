@@ -29,16 +29,6 @@ public class EmprestimosFragment extends Fragment {
 
     }
 
-    private void orderById(List<Emprestimo> list) {
-        Collections.sort(list, new Comparator<Emprestimo>() {
-            @Override
-            public int compare(Emprestimo item2, Emprestimo item1) {
-
-                return item1.getId().compareTo(item2.getId());
-            }
-        });
-    }
-
     public ArrayList<Emprestimo> buscarEmprestimos(Context context){
 
         ArrayList<Emprestimo> returnClass = null;
@@ -55,8 +45,6 @@ public class EmprestimosFragment extends Fragment {
             }
 
         }
-
-        orderById(returnClass);
 
         return returnClass;
 

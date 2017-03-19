@@ -111,7 +111,7 @@ public class ProjetoresFragment extends Fragment {
             @Override
             public int compare(Projetor item2, Projetor item1) {
 
-                return item1.getId().compareTo(item2.getId());
+                return item2.getId().compareTo(item1.getId());
             }
         });
     }
@@ -134,7 +134,8 @@ public class ProjetoresFragment extends Fragment {
 
         }
 
-        orderById(returnClass);
+        if(returnClass != null)
+            orderById(returnClass);
 
         return returnClass;
 

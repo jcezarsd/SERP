@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment {
 
                 if (barcodes.size() != 0) {
 
-                    cadastrarProjetor(getContext(), barcodes.valueAt(0).displayValue);
+                    //Aqui deve ser chamado a activity que vai cuidar do emprestimo
 
                 }
 
