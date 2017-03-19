@@ -9,6 +9,9 @@ import com.example.aluno.projetores.database.SerializeObject;
 import com.example.aluno.projetores.models.Emprestimo;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class EmprestimosFragment extends Fragment {
 
@@ -24,6 +27,16 @@ public class EmprestimosFragment extends Fragment {
 
         Database.save(context, emprestimo, NOME_ARQUIVO);
 
+    }
+
+    private void orderById(List<Emprestimo> list) {
+        Collections.sort(list, new Comparator<Emprestimo>() {
+            @Override
+            public int compare(Emprestimo item2, Emprestimo item1) {
+
+                return item1.getId().compareTo(item2.getId());
+            }
+        });
     }
 
     public ArrayList<Emprestimo> buscarEmprestimos(Context context){
@@ -42,6 +55,8 @@ public class EmprestimosFragment extends Fragment {
             }
 
         }
+
+        orderById(returnClass);
 
         return returnClass;
 

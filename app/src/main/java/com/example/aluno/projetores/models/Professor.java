@@ -2,13 +2,10 @@ package com.example.aluno.projetores.models;
 
 import android.content.Context;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import com.example.aluno.projetores.fragments.ProfessoresFragment;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import static android.content.Context.*;
 
 /**
  * Created by aluno on 30/01/17.
@@ -51,6 +48,22 @@ public class Professor implements Serializable {
             ;
         }
         return null;
+    }
+
+    public static void cadastrarProfessor(Context context, Professor professor) {
+
+        ProfessoresFragment professoresFragment = new ProfessoresFragment();
+        ArrayList<Professor> professores = professoresFragment.buscarProfessores(context);
+
+        Professor newProfessor = new Professor(professor.getNome(),
+                professor.getMatricula(),
+                professor.getDepartamento(),
+                (professores.get(professores.size()-1).getId()) +1);
+
+        professores.add(newProfessor);
+
+        professoresFragment.save(professores, context);
+
     }
 
 }

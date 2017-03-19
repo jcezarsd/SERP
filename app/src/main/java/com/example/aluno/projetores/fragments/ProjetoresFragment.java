@@ -21,6 +21,9 @@ import com.example.aluno.projetores.decorators.GridSpacingItemDecoration;
 import com.example.aluno.projetores.models.Projetor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class ProjetoresFragment extends Fragment {
 
@@ -103,6 +106,17 @@ public class ProjetoresFragment extends Fragment {
         Database.save(context, projetor, NOME_ARQUIVO);
     }
 
+    private void orderById(List<Projetor> list) {
+        Collections.sort(list, new Comparator<Projetor>() {
+            @Override
+            public int compare(Projetor item2, Projetor item1) {
+
+                return item1.getId().compareTo(item2.getId());
+            }
+        });
+    }
+
+
     public ArrayList<Projetor> buscarProjetores(Context context){
 
         ArrayList<Projetor> returnClass = null;
@@ -119,6 +133,8 @@ public class ProjetoresFragment extends Fragment {
             }
 
         }
+
+        orderById(returnClass);
 
         return returnClass;
 

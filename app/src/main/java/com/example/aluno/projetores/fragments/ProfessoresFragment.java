@@ -21,6 +21,9 @@ import com.example.aluno.projetores.decorators.GridSpacingItemDecoration;
 import com.example.aluno.projetores.models.Professor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class ProfessoresFragment extends Fragment {
     private RecyclerView rvProfessores;
@@ -103,6 +106,16 @@ public class ProfessoresFragment extends Fragment {
 
     }
 
+    private void orderById(List<Professor> list) {
+        Collections.sort(list, new Comparator<Professor>() {
+            @Override
+            public int compare(Professor item2, Professor item1) {
+
+                return item1.getId().compareTo(item2.getId());
+            }
+        });
+    }
+
     public ArrayList<Professor> buscarProfessores(Context context) {
 
         ArrayList<Professor> returnClass = null;
@@ -119,6 +132,8 @@ public class ProfessoresFragment extends Fragment {
             }
 
         }
+
+        orderById(returnClass);
 
         return returnClass;
 

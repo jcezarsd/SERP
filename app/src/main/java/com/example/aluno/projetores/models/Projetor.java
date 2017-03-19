@@ -26,13 +26,6 @@ public class Projetor implements Serializable {
         this.numPatrimonio = numPatrimonio;
     }
 
-    public Projetor(String marca, String modelo, Integer situacao, String numPatrimonio) {
-        this.marca = marca;
-        this.modelo = modelo;
-        this.situacao = situacao;
-        this.numPatrimonio = numPatrimonio;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -71,13 +64,18 @@ public class Projetor implements Serializable {
         return null;
     }
 
-    public static void cadastrarProjetor(Context context, String numPatrimonio) {
+    public static void cadastrarProjetor(Context context, Projetor projetor) {
 
         ProjetoresFragment projetoresFragment = new ProjetoresFragment();
-        Projetor projetor = new Projetor("Teste", "Japones", 0, numPatrimonio);
-
         ArrayList<Projetor> projetores = projetoresFragment.buscarProjetores(context);
-        projetores.add(projetor);
+
+        Projetor newProjetor = new Projetor(projetor.getMarca(),
+                projetor.getModelo(),
+                0,
+                projetor.getNumPatrimonio(),
+                (projetores.get(projetores.size()-1).getId()) +1);
+
+        projetores.add(newProjetor);
 
         projetoresFragment.save(projetores, context);
 

@@ -1,5 +1,11 @@
 package com.example.aluno.projetores.database;
 
+import android.content.Context;
+import android.util.Base64InputStream;
+import android.util.Base64OutputStream;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -12,12 +18,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
-
-import android.content.Context;
-import android.util.Base64InputStream;
-import android.util.Base64OutputStream;
-import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Take an object and serialize and then save it to preferences

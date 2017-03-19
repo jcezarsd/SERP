@@ -1,6 +1,11 @@
 package com.example.aluno.projetores.models;
 
+import android.content.Context;
+
+import com.example.aluno.projetores.fragments.EmprestimosFragment;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -50,6 +55,22 @@ public class Emprestimo implements Serializable{
     public void devolver() {
         this.dataDevolucao = new Date();
         this.isAtivo = false;
+    }
+
+    public static void cadastrarProfessor(Context context, Emprestimo emprestimo) {
+
+        EmprestimosFragment emprestimosFragment = new EmprestimosFragment();
+        ArrayList<Emprestimo> emprestimos = emprestimosFragment.buscarEmprestimos(context);
+
+        Emprestimo newEmprestimo = new Emprestimo(emprestimo.getIdProjetor(),
+                emprestimo.getIdProfessor(),
+                emprestimo.getDataEmprestimo(),
+                emprestimo.getDataDevolucao());
+
+        emprestimos.add(newEmprestimo);
+
+        emprestimosFragment.save(emprestimos, context);
+
     }
 
 }
