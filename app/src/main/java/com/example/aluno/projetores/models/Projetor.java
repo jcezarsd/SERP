@@ -1,5 +1,9 @@
 package com.example.aluno.projetores.models;
 
+import android.content.Context;
+
+import com.example.aluno.projetores.fragments.ProjetoresFragment;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -16,6 +20,13 @@ public class Projetor implements Serializable {
 
     public Projetor(String marca, String modelo, Integer situacao, String numPatrimonio, Integer id) {
         this.id = id;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.situacao = situacao;
+        this.numPatrimonio = numPatrimonio;
+    }
+
+    public Projetor(String marca, String modelo, Integer situacao, String numPatrimonio) {
         this.marca = marca;
         this.modelo = modelo;
         this.situacao = situacao;
@@ -58,5 +69,17 @@ public class Projetor implements Serializable {
             };
         }
         return null;
+    }
+
+    public static void cadastrarProjetor(Context context, String numPatrimonio) {
+
+        ProjetoresFragment projetoresFragment = new ProjetoresFragment();
+        Projetor projetor = new Projetor("Teste", "Japones", 0, numPatrimonio);
+
+        ArrayList<Projetor> projetores = projetoresFragment.buscarProjetores(context);
+        projetores.add(projetor);
+
+        projetoresFragment.save(projetores, context);
+
     }
 }

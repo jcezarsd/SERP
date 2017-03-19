@@ -122,25 +122,6 @@ public class ProfessoresFragment extends Fragment {
 
         return returnClass;
 
-//        ObjectInputStream input = null;
-//        ArrayList<Professor> ReturnClass = null;
-//        File f = new File(context.getFilesDir(), NOME_ARQUIVO);
-//        try {
-//
-//            input = new ObjectInputStream(new FileInputStream(f));
-//            ReturnClass = (ArrayList<Professor>) input.readObject();
-//            input.close();
-//
-//        } catch (StreamCorruptedException e) {
-//            e.printStackTrace();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return ReturnClass;
     }
 
 }

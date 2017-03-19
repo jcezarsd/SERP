@@ -9,7 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aluno.projetores.R;
-import com.example.aluno.projetores.fake.FakeData;
+import com.example.aluno.projetores.fragments.ProfessoresFragment;
+import com.example.aluno.projetores.fragments.ProjetoresFragment;
 import com.example.aluno.projetores.models.Emprestimo;
 import com.example.aluno.projetores.models.Professor;
 import com.example.aluno.projetores.models.Projetor;
@@ -41,8 +42,8 @@ public class EmprestimoAdapter extends RecyclerView.Adapter<EmprestimoAdapter.Em
     @Override
     public void onBindViewHolder(final EmprestimoViewHolder holder, int position) {
         
-        Projetor projetor = Projetor.findById(new FakeData().getProjetores(),emprestimos.get(position).getIdProjetor());
-        Professor professor = Professor.findById(new FakeData().getProfessores() ,emprestimos.get(position).getIdProjetor());
+        Projetor projetor = Projetor.findById(new ProjetoresFragment().buscarProjetores(mContext), emprestimos.get(position).getIdProjetor());
+        Professor professor = Professor.findById(new ProfessoresFragment().buscarProfessores(mContext), emprestimos.get(position).getIdProjetor());
 
         if (projetor != null && professor != null) {
 

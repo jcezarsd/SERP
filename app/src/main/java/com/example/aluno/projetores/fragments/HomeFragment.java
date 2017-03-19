@@ -1,6 +1,7 @@
 package com.example.aluno.projetores.fragments;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,12 +19,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.aluno.projetores.R;
+import com.example.aluno.projetores.models.Professor;
+import com.example.aluno.projetores.models.Projetor;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import static com.example.aluno.projetores.models.Projetor.cadastrarProjetor;
 
 public class HomeFragment extends Fragment {
 
@@ -137,11 +143,9 @@ public class HomeFragment extends Fragment {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
                 if (barcodes.size() != 0) {
-                    barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
-                        public void run() {
-                            barcodeInfo.setText("QRCode: " + barcodes.valueAt(0).displayValue); // Update the TextView
-                        }
-                    });
+
+                    cadastrarProjetor(getContext(), barcodes.valueAt(0).displayValue);
+
                 }
 
             }

@@ -32,25 +32,6 @@ public class Database {
             SerializeObject.WriteSettings(context, "", fileName);
         }
 
-//        File f = new File(context.getFilesDir() + File.separator + fileName);
-//
-//        try {
-//
-//            FileOutputStream fos = new FileOutputStream(f);
-//            ObjectOutputStream objectwrite = new ObjectOutputStream(fos);
-//            objectwrite.writeObject(object);
-//            fos.close();
-//
-//            if (!f.exists()) {
-//                f.mkdirs();
-//            }
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
     }
 
 }

@@ -45,25 +45,5 @@ public class EmprestimosFragment extends Fragment {
 
         return returnClass;
 
-//        ObjectInputStream input = null;
-//        ArrayList<Emprestimo> ReturnClass = null;
-//        File f = new File(context.getFilesDir(), NOME_ARQUIVO);
-//        try {
-//
-//            input = new ObjectInputStream(new FileInputStream(f));
-//            ReturnClass = (ArrayList<Emprestimo>) input.readObject();
-//            input.close();
-//
-//        } catch (StreamCorruptedException e) {
-//            e.printStackTrace();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return ReturnClass;
-
     }
 }

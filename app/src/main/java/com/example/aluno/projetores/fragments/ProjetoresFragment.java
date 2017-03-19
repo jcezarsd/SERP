@@ -122,25 +122,5 @@ public class ProjetoresFragment extends Fragment {
 
         return returnClass;
 
-//        ObjectInputStream input = null;
-//        ArrayList<Projetor> ReturnClass = null;
-//        File f = new File(context.getFilesDir(), NOME_ARQUIVO);
-//        try {
-//
-//            input = new ObjectInputStream(new FileInputStream(f));
-//            ReturnClass = (ArrayList<Projetor>) input.readObject();
-//            input.close();
-//
-//        } catch (StreamCorruptedException e) {
-//            e.printStackTrace();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return ReturnClass;
-
     }
 }

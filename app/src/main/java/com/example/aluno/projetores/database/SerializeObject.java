@@ -83,10 +83,10 @@ public class SerializeObject {
             osw = new OutputStreamWriter(fOut);
             osw.write(data);
             osw.flush();
-            Toast.makeText(context, "Settings saved",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Salvo com sucesso!",Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "Settings not saved",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Erro ao salvar.",Toast.LENGTH_SHORT).show();
         }
         finally {
             try {
