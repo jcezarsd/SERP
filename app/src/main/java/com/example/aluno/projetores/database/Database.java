@@ -2,20 +2,7 @@ package com.example.aluno.projetores.database;
 
 import android.content.Context;
 
-import com.example.aluno.projetores.models.Projetor;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Julio on 19/03/2017.

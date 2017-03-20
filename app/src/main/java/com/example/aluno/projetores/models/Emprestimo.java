@@ -48,16 +48,30 @@ public class Emprestimo implements Serializable{
         return dataDevolucao;
     }
 
+    public void setDataDevolucao(Date dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
+
     public Boolean getAtivo() {
         return isAtivo;
     }
 
-    public void devolver() {
-        this.dataDevolucao = new Date();
-        this.isAtivo = false;
+    public static void finalizarEmprestimo(Context context, Emprestimo emprestimo) {
+
+        EmprestimosFragment emprestimosFragment = new EmprestimosFragment();
+        ArrayList<Emprestimo> emprestimos = emprestimosFragment.buscarEmprestimos(context);
+
+        for (Emprestimo emprestimoFinalizado: emprestimos) {
+            if (emprestimoFinalizado.getId().equals(emprestimo.getId())) {
+                emprestimoFinalizado.setDataDevolucao(new Date());
+            }
+        }
+
+        emprestimosFragment.save(emprestimos, context);
+
     }
 
-    public static void cadastrarProfessor(Context context, Emprestimo emprestimo) {
+    public static void cadastrarEmprestimo(Context context, Emprestimo emprestimo) {
 
         EmprestimosFragment emprestimosFragment = new EmprestimosFragment();
         ArrayList<Emprestimo> emprestimos = emprestimosFragment.buscarEmprestimos(context);

@@ -42,10 +42,19 @@ public class Professor implements Serializable {
 
     public static Professor findById (ArrayList<Professor> professores, Integer id) {
         for (Professor professor : professores) {
-            if (professor.id.equals(id)) {
+            if (professor.getId().equals(id)) {
                 return professor;
             }
-            ;
+        }
+        return null;
+    }
+
+
+    public static Professor findByNome (ArrayList<Professor> professores, String nome) {
+        for (Professor professor : professores) {
+            if (professor.getNome().equals(nome)) {
+                return professor;
+            }
         }
         return null;
     }

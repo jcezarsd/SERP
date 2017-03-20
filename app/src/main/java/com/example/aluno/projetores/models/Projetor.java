@@ -55,11 +55,28 @@ public class Projetor implements Serializable {
         return numPatrimonio;
     }
 
+    public void setSituacao(Integer situacao) {
+        this.situacao = situacao;
+    }
+
     public static Projetor findById (ArrayList<Projetor> projetores, Integer id){
         for (Projetor projetor: projetores) {
             if (projetor.id.equals(id)){
                 return projetor;
-            };
+            }
+        }
+        return null;
+    }
+
+    public static Projetor findByPatrimonio (Context context, String numPatrimonio){
+
+        ProjetoresFragment projetoresFragment = new ProjetoresFragment();
+        ArrayList<Projetor> projetores = projetoresFragment.buscarProjetores(context);
+
+        for (Projetor projetor: projetores) {
+            if (projetor.numPatrimonio.equals(numPatrimonio)){
+                return projetor;
+            }
         }
         return null;
     }
@@ -76,6 +93,51 @@ public class Projetor implements Serializable {
                 (projetores.get(projetores.size()-1).getId()) +1);
 
         projetores.add(newProjetor);
+
+        projetoresFragment.save(projetores, context);
+
+    }
+
+    public static void emprestarProjetor(Context context, Projetor projetor) {
+
+        ProjetoresFragment projetoresFragment = new ProjetoresFragment();
+        ArrayList<Projetor> projetores = projetoresFragment.buscarProjetores(context);
+
+        for (Projetor projetorCadastrado: projetores) {
+            if (projetorCadastrado.getNumPatrimonio().equals(projetor.getNumPatrimonio())) {
+                projetorCadastrado.setSituacao(2);
+            }
+        }
+
+        projetoresFragment.save(projetores, context);
+
+    }
+
+    public static void devolverProjetor(Context context, Projetor projetor) {
+
+        ProjetoresFragment projetoresFragment = new ProjetoresFragment();
+        ArrayList<Projetor> projetores = projetoresFragment.buscarProjetores(context);
+
+        for (Projetor projetorCadastrado: projetores) {
+            if (projetorCadastrado.getNumPatrimonio().equals(projetor.getNumPatrimonio())) {
+                projetorCadastrado.setSituacao(1);
+            }
+        }
+
+        projetoresFragment.save(projetores, context);
+
+    }
+
+    public static void settarEstragadoProjetor(Context context, Projetor projetor) {
+
+        ProjetoresFragment projetoresFragment = new ProjetoresFragment();
+        ArrayList<Projetor> projetores = projetoresFragment.buscarProjetores(context);
+
+        for (Projetor projetorCadastrado: projetores) {
+            if (projetorCadastrado.getNumPatrimonio().equals(projetor.getNumPatrimonio())) {
+                projetorCadastrado.setSituacao(3);
+            }
+        }
 
         projetoresFragment.save(projetores, context);
 

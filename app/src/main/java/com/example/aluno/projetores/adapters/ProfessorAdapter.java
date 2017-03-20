@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.aluno.projetores.models.Professor;
 import com.example.aluno.projetores.R;
+import com.example.aluno.projetores.models.Professor;
 
 import java.util.List;
 

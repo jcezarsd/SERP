@@ -26,8 +26,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".fragments.ProfessoresFragment"/>
-        <activity android:name=".fragments.ProjetoresFragment"/>
+
+        <activity
+            android:name=".Emprestar"
+            android:label="Emprestimo de projetor"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.aluno.projetores.MainActivity" />
+        </activity>
 
     </application>
 

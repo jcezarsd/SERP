@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 
+import com.example.aluno.projetores.fragments.CadastrarProfessoresFragment;
+import com.example.aluno.projetores.fragments.CadastrarProjetoresFragment;
 import com.example.aluno.projetores.fragments.EmprestimosFragment;
 import com.example.aluno.projetores.fragments.HomeFragment;
 import com.example.aluno.projetores.fragments.ProfessoresFragment;
@@ -19,9 +21,9 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
@@ -64,10 +66,16 @@ public class MainActivity extends AppCompatActivity {
                 new ProfileDrawerItem().withEmail("Técnico").withIcon(R.drawable.ic_account_circle_white)
         ).withHeaderBackground(R.color.colorPrimaryDark).build();
 
-        PrimaryDrawerItem home = new PrimaryDrawerItem().withIdentifier(0).withName("Emprestar projetor").withIcon(R.drawable.ic_crop_free);
-        PrimaryDrawerItem projetores = new PrimaryDrawerItem().withIdentifier(1).withName("Projetores").withIcon(R.drawable.ic_videocam);
-        PrimaryDrawerItem professores = new PrimaryDrawerItem().withIdentifier(2).withName("Professores").withIcon(R.drawable.ic_account_box);
-        PrimaryDrawerItem emprestimos = new PrimaryDrawerItem().withIdentifier(3).withName("Emprestimos").withIcon(R.drawable.ic_assignment);
+        PrimaryDrawerItem home = new PrimaryDrawerItem().withIdentifier(0).withName("Emprestar/Devolver projetor").withIcon(R.drawable.ic_crop_free);
+        SectionDrawerItem sectionProjetores = new SectionDrawerItem().withIdentifier(1).withName("PROJETORES");
+        PrimaryDrawerItem projetores = new PrimaryDrawerItem().withIdentifier(2).withName("Projetores").withIcon(R.drawable.ic_videocam);
+        PrimaryDrawerItem adicionarProjetor = new PrimaryDrawerItem().withIdentifier(3).withName("Adicionar projetor").withIcon(R.drawable.ic_video_call);
+        SectionDrawerItem sectionProfessores = new SectionDrawerItem().withIdentifier(4).withName("PROFESSORES");
+        PrimaryDrawerItem professores = new PrimaryDrawerItem().withIdentifier(5).withName("Professores").withIcon(R.drawable.ic_person);
+        PrimaryDrawerItem adicionarProfessor = new PrimaryDrawerItem().withIdentifier(6).withName("Adicionar professor").withIcon(R.drawable.ic_person_add);
+        SectionDrawerItem sectionEmprestimos = new SectionDrawerItem().withIdentifier(7).withName("EMPRÉSTIMOS");
+        PrimaryDrawerItem emprestimos = new PrimaryDrawerItem().withIdentifier(8).withName("Emprestimos").withIcon(R.drawable.ic_assignment);
+
 
         navigationDrawerLeft = new DrawerBuilder()
                 .withActivity(this)
@@ -75,10 +83,15 @@ public class MainActivity extends AppCompatActivity {
                 .withDisplayBelowStatusBar(true)
                 .withActionBarDrawerToggleAnimated(true).withDrawerGravity(Gravity.LEFT)
                 .withSavedInstance(savedInstanceState)
-                .addDrawerItems(home,
-                        new DividerDrawerItem(),
+                .addDrawerItems(
+                        home,
+                        sectionProjetores,
                         projetores,
+                        adicionarProjetor,
+                        sectionProfessores,
                         professores,
+                        adicionarProfessor,
+                        sectionEmprestimos,
                         emprestimos)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -100,12 +113,24 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                             case 4:
+                                ft.replace(R.id.flMainContent, new CadastrarProjetoresFragment());
+                                mToolbar.setTitle("Projetores");
+                                ft.commit();
+                                break;
+
+                            case 6:
                                 ft.replace(R.id.flMainContent, new ProfessoresFragment());
                                 mToolbar.setTitle("Professores");
                                 ft.commit();
                                 break;
 
-                            case 5:
+                            case 7:
+                                ft.replace(R.id.flMainContent, new CadastrarProfessoresFragment());
+                                mToolbar.setTitle("Professores");
+                                ft.commit();
+                                break;
+
+                            case 9:
                                 ft.replace(R.id.flMainContent, new EmprestimosFragment());
                                 mToolbar.setTitle("Emprestimos");
                                 ft.commit();
@@ -168,8 +193,8 @@ public class MainActivity extends AppCompatActivity {
             emprestimos.add(new Emprestimo(2, 2, new Date(), null));
             emprestimos.add(new Emprestimo(3, 0, new Date(), null));
             emprestimos.add(new Emprestimo(4, 1, new Date(), null));
-            emprestimos.add(new Emprestimo(5, 2, new Date(), null));
-            emprestimos.add(new Emprestimo(6, 3, new Date(), null));
+            emprestimos.add(new Emprestimo(5, 2, new Date(), new Date()));
+            emprestimos.add(new Emprestimo(6, 3, new Date(), new Date()));
 
             emprestimosFragment.save(emprestimos, applicationContext);
         }

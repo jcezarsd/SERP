@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aluno.projetores.R;
+import com.example.aluno.projetores.formatters.Formatters;
 import com.example.aluno.projetores.fragments.ProfessoresFragment;
 import com.example.aluno.projetores.fragments.ProjetoresFragment;
 import com.example.aluno.projetores.models.Emprestimo;
@@ -43,7 +44,7 @@ public class EmprestimoAdapter extends RecyclerView.Adapter<EmprestimoAdapter.Em
     public void onBindViewHolder(final EmprestimoViewHolder holder, int position) {
         
         Projetor projetor = Projetor.findById(new ProjetoresFragment().buscarProjetores(mContext), emprestimos.get(position).getIdProjetor());
-        Professor professor = Professor.findById(new ProfessoresFragment().buscarProfessores(mContext), emprestimos.get(position).getIdProjetor());
+        Professor professor = Professor.findById(new ProfessoresFragment().buscarProfessores(mContext), emprestimos.get(position).getIdProfessor());
 
         if (projetor != null && professor != null) {
 
@@ -55,10 +56,10 @@ public class EmprestimoAdapter extends RecyclerView.Adapter<EmprestimoAdapter.Em
             holder.nomeProfessor.setText("");
         }
 
-        holder.dataEmprestimo.setText("Emprestado em: " + emprestimos.get(position).getDataEmprestimo().toString());
+        holder.dataEmprestimo.setText("Emprestado em: " + Formatters.dateToString(emprestimos.get(position).getDataEmprestimo()));
         Date dataDevolucao = emprestimos.get(position).getDataDevolucao();
         if (dataDevolucao != null) {
-            holder.dataDevolucao.setText("Devolvido em: " + dataDevolucao.toString());
+            holder.dataDevolucao.setText("Devolvido em: " + Formatters.dateToString(dataDevolucao));
         } else {
             holder.dataDevolucao.setText("");
         }

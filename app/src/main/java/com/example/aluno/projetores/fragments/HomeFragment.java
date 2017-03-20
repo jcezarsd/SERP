@@ -1,7 +1,7 @@
 package com.example.aluno.projetores.fragments;
 
 import android.Manifest;
-import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.aluno.projetores.R;
-import com.example.aluno.projetores.models.Professor;
+import com.example.aluno.projetores.Emprestar;
 import com.example.aluno.projetores.models.Projetor;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -27,9 +27,6 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import static com.example.aluno.projetores.models.Projetor.cadastrarProjetor;
 
 public class HomeFragment extends Fragment {
 
@@ -144,7 +141,13 @@ public class HomeFragment extends Fragment {
 
                 if (barcodes.size() != 0) {
 
-                    //Aqui deve ser chamado a activity que vai cuidar do emprestimo
+                    Projetor projetor = Projetor.findByPatrimonio(getContext(), barcodes.valueAt(barcodes.size() - 1).displayValue);
+
+                    //TODO Inserir o IF para verificar se eh emprestimo ou devolucao
+                    Intent intent = new Intent(getContext(), Emprestar.class);
+                    intent.putExtra("PROJETOR", projetor);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
 
                 }
 
