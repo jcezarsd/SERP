@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         setNavigationDrawer(savedInstanceState);
 
-        insertFakeData(getApplicationContext());
+//        insertFakeData(getApplicationContext());
     }
 
     private void instantiateViews(){
@@ -173,13 +173,13 @@ public class MainActivity extends AppCompatActivity {
 
             projetores.add(new Projetor("Phillips", "BBR1001", 0, "0101010101", 0));
             projetores.add(new Projetor("Phillips", "KXT-8785", 0, "0202020202", 1));
-            projetores.add(new Projetor("Epson", "Mod2342", 1, "0303030303", 2));
-            projetores.add(new Projetor("Epson", "Mod9783", 1, "0404040404", 3));
+            projetores.add(new Projetor("Epson", "Mod2342", 0, "0303030303", 2));
+            projetores.add(new Projetor("Epson", "Mod9783", 0, "0404040404", 3));
             projetores.add(new Projetor("Multilaser", "Ruim", 2, "0505050505", 4));
             projetores.add(new Projetor("DaChina", "SM", 2, "0606060606", 5));
             projetores.add(new Projetor("DaChina", "SM", 2, "0707070707", 6));
-            projetores.add(new Projetor("DaChina", "SM", 1, "0808080808", 7));
-            projetores.add(new Projetor("DaChina", "SM", 0, "0909090909", 8));
+            projetores.add(new Projetor("DaChina", "SM", 2, "0808080808", 7));
+            projetores.add(new Projetor("DaChina", "SM", 2, "0909090909", 8));
 
             projetoresFragment.save(projetores, applicationContext);
         }
@@ -188,13 +188,13 @@ public class MainActivity extends AppCompatActivity {
 
             emprestimos = new ArrayList<>();
 
-            emprestimos.add(new Emprestimo(0, 0, new Date(), null));
-            emprestimos.add(new Emprestimo(1, 1, new Date(), null));
-            emprestimos.add(new Emprestimo(2, 2, new Date(), null));
-            emprestimos.add(new Emprestimo(3, 0, new Date(), null));
-            emprestimos.add(new Emprestimo(4, 1, new Date(), null));
-            emprestimos.add(new Emprestimo(5, 2, new Date(), new Date()));
-            emprestimos.add(new Emprestimo(6, 3, new Date(), new Date()));
+            emprestimos.add(new Emprestimo(0, 0, new Date(), null, 0));
+            emprestimos.add(new Emprestimo(1, 1, new Date(), null, 1));
+            emprestimos.add(new Emprestimo(2, 2, new Date(), null, 2));
+            emprestimos.add(new Emprestimo(3, 0, new Date(), null, 3));
+            emprestimos.add(new Emprestimo(4, 1, new Date(), null, 4));
+            emprestimos.add(new Emprestimo(5, 2, new Date(), new Date(), 5));
+            emprestimos.add(new Emprestimo(6, 3, new Date(), new Date(), 6));
 
             emprestimosFragment.save(emprestimos, applicationContext);
         }

@@ -64,10 +64,24 @@ public class Professor implements Serializable {
         ProfessoresFragment professoresFragment = new ProfessoresFragment();
         ArrayList<Professor> professores = professoresFragment.buscarProfessores(context);
 
-        Professor newProfessor = new Professor(professor.getNome(),
-                professor.getMatricula(),
-                professor.getDepartamento(),
-                (professores.get(professores.size()-1).getId()) +1);
+        if (professores == null) {
+            professores = new ArrayList<>();
+        }
+
+        Professor newProfessor;
+
+        if(professores.size() > 0) {
+
+            newProfessor = new Professor(professor.getNome(),
+                    professor.getMatricula(),
+                    professor.getDepartamento(),
+                    (professores.get(professores.size()-1).getId()) +1);
+        } else {
+            newProfessor = new Professor(professor.getNome(),
+                    professor.getMatricula(),
+                    professor.getDepartamento(),
+                    professor.getId());
+        }
 
         professores.add(newProfessor);
 

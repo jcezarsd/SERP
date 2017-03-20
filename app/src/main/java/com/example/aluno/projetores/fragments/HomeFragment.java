@@ -17,9 +17,13 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.aluno.projetores.Devolver;
 import com.example.aluno.projetores.R;
 import com.example.aluno.projetores.Emprestar;
+import com.example.aluno.projetores.models.Emprestimo;
+import com.example.aluno.projetores.models.Professor;
 import com.example.aluno.projetores.models.Projetor;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -143,11 +147,31 @@ public class HomeFragment extends Fragment {
 
                     Projetor projetor = Projetor.findByPatrimonio(getContext(), barcodes.valueAt(barcodes.size() - 1).displayValue);
 
-                    //TODO Inserir o IF para verificar se eh emprestimo ou devolucao
-                    Intent intent = new Intent(getContext(), Emprestar.class);
-                    intent.putExtra("PROJETOR", projetor);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    if(projetor != null) {
+
+                        if (projetor.getSituacao().equals(Projetor.PROJETOR_DISPONIVEL)) {
+                            Intent intent = new Intent(getContext(), Emprestar.class);
+                            intent.putExtra("PROJETOR", projetor);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else if (projetor.getSituacao().equals(Projetor.PROJETOR_EMPRESTADO)) {
+
+                            Emprestimo emprestimo = Emprestimo.findByIdProjetor(getContext(), projetor.getId());
+                            Professor professor = Professor.findById(new ProfessoresFragment().buscarProfessores(getContext()), emprestimo.getIdProfessor());
+                            Intent intent = new Intent(getContext(), Devolver.class);
+                            intent.putExtra("PROJETOR", projetor);
+                            intent.putExtra("PROFESSOR", professor);
+                            intent.putExtra("EMPRESTIMO", emprestimo);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else if (projetor.getSituacao().equals(Projetor.PROJETOR_ESTRAGADO)) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Projetor com defeito", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+
+                        Toast.makeText(getActivity(), "QRCode inválido", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
 

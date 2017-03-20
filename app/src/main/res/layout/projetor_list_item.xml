@@ -19,29 +19,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:id="@+id/llAction">
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/btEdit"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:contentDescription="Action"
-            android:src="@drawable/ic_mode_edit"/>
-    </LinearLayout>
-
-    <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_toRightOf="@id/llIcon"
-        android:layout_toLeftOf="@id/llAction">
+        android:layout_toRightOf="@id/llIcon">
 
         <TextView
             android:id="@+id/tvMarca"

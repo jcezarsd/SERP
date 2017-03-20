@@ -20,7 +20,8 @@ public class Emprestimo implements Serializable{
     private Date dataDevolucao;
     private Boolean isAtivo;
 
-    public Emprestimo(Integer idProjetor, Integer idProfessor, Date dataEmprestimo, Date dataDevolucao) {
+    public Emprestimo(Integer idProjetor, Integer idProfessor, Date dataEmprestimo, Date dataDevolucao, Integer id) {
+        this.id = id;
         this.idProjetor = idProjetor;
         this.idProfessor = idProfessor;
         this.dataEmprestimo = dataEmprestimo;
@@ -56,6 +57,26 @@ public class Emprestimo implements Serializable{
         return isAtivo;
     }
 
+    public void devolver() {
+
+        this.isAtivo = false;
+        this.setDataDevolucao(new Date());
+    }
+
+    public static Emprestimo findByIdProjetor (Context context, Integer idProjetor) {
+
+        EmprestimosFragment emprestimosFragment = new EmprestimosFragment();
+        ArrayList<Emprestimo> emprestimos = emprestimosFragment.buscarEmprestimos(context);
+
+        for (Emprestimo emprestimo: emprestimos) {
+
+            if(emprestimo.getIdProjetor().equals(idProjetor) && emprestimo.getAtivo()) {
+                return emprestimo;
+            }
+        }
+        return null;
+    }
+
     public static void finalizarEmprestimo(Context context, Emprestimo emprestimo) {
 
         EmprestimosFragment emprestimosFragment = new EmprestimosFragment();
@@ -63,7 +84,7 @@ public class Emprestimo implements Serializable{
 
         for (Emprestimo emprestimoFinalizado: emprestimos) {
             if (emprestimoFinalizado.getId().equals(emprestimo.getId())) {
-                emprestimoFinalizado.setDataDevolucao(new Date());
+                emprestimoFinalizado.devolver();
             }
         }
 
@@ -76,10 +97,27 @@ public class Emprestimo implements Serializable{
         EmprestimosFragment emprestimosFragment = new EmprestimosFragment();
         ArrayList<Emprestimo> emprestimos = emprestimosFragment.buscarEmprestimos(context);
 
-        Emprestimo newEmprestimo = new Emprestimo(emprestimo.getIdProjetor(),
-                emprestimo.getIdProfessor(),
-                emprestimo.getDataEmprestimo(),
-                emprestimo.getDataDevolucao());
+        if (emprestimos == null) {
+            emprestimos = new ArrayList<>();
+        }
+
+
+        Emprestimo newEmprestimo;
+
+        if(emprestimos.size() > 0) {
+
+            newEmprestimo = new Emprestimo(emprestimo.getIdProjetor(),
+                    emprestimo.getIdProfessor(),
+                    emprestimo.getDataEmprestimo(),
+                    emprestimo.getDataDevolucao(),
+                    (emprestimos.get(emprestimos.size() - 1).getId()) + 1);
+        } else {
+            newEmprestimo = new Emprestimo(emprestimo.getIdProjetor(),
+                    emprestimo.getIdProfessor(),
+                    emprestimo.getDataEmprestimo(),
+                    emprestimo.getDataDevolucao(),
+                    emprestimo.getId());
+        }
 
         emprestimos.add(newEmprestimo);
 

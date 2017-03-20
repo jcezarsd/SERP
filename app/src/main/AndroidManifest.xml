@@ -30,8 +30,18 @@
         <activity
             android:name=".Emprestar"
             android:label="Emprestimo de projetor"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.aluno.projetores.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".Devolver"
+            android:label="Devolução de projetor"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.aluno.projetores.MainActivity" />

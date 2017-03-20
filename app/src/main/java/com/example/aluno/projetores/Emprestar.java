@@ -47,8 +47,6 @@ public class Emprestar extends AppCompatActivity {
         configurarBotao();
 
 
-
-
     }
 
     private void instantiateViews(){
@@ -110,10 +108,12 @@ public class Emprestar extends AppCompatActivity {
 
         if (projetor != null && professorSelecionado != null) {
 
-            Emprestimo emprestimo = new Emprestimo(projetor.getId(), professorSelecionado.getId(), new Date(), null);
+            Emprestimo emprestimo = new Emprestimo(projetor.getId(), professorSelecionado.getId(), new Date(), null, 0);
 
             Emprestimo.cadastrarEmprestimo(getApplicationContext(), emprestimo);
         }
+
+        Projetor.emprestarProjetor(getApplicationContext(), projetor);
 
         finish();
 
